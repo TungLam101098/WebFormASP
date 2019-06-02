@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ASP" Class="QuanLyDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=MAYTINH\SQLEXPRESS;Initial Catalog=ASP;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ASPConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Admin" Member="Admins">
+    <Type Name="Admin">
+      <Column Name="TenDangNhap" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MatKhau" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ChiTiet" Member="ChiTiets">
+    <Type Name="ChiTiet">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NgayDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idNguoiDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="NguoiDat_ChiTiet" Member="NguoiDat" ThisKey="idNguoiDat" OtherKey="idNguoiDat" Type="NguoiDat" IsForeignKey="true" />
+      <Association Name="Phong_ChiTiet" Member="Phong" ThisKey="idPhong" OtherKey="idPhong" Type="Phong" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NguoiDat" Member="NguoiDats">
+    <Type Name="NguoiDat">
+      <Column Name="idNguoiDat" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="HoTen" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="NguoiDat_ChiTiet" Member="ChiTiets" ThisKey="idNguoiDat" OtherKey="idNguoiDat" Type="ChiTiet" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Phong" Member="Phongs">
+    <Type Name="Phong">
+      <Column Name="idPhong" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Phong_ChiTiet" Member="ChiTiets" ThisKey="idPhong" OtherKey="idPhong" Type="ChiTiet" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ThongBao" Member="ThongBaos">
+    <Type Name="ThongBao">
+      <Column Name="idThongBao" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ChiTiet" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.Select_ThongBao" Method="Select_ThongBao">
+    <ElementType Name="Select_ThongBaoResult">
+      <Column Name="idThongBao" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ChiTiet" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Select_Phong" Method="Select_Phong">
+    <ElementType Name="Select_PhongResult">
+      <Column Name="idPhong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Login_User" Method="Login_User">
+    <Parameter Name="TaiKhoan" Parameter="taiKhoan" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="MatKhau" Parameter="matKhau" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="Login_UserResult">
+      <Column Name="TenDangNhap" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="MatKhau" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Select_AllPhong" Method="Select_AllPhong">
+    <ElementType Name="Select_AllPhongResult">
+      <Column Name="idPhong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Select_AllDangKyPhong" Method="Select_AllDangKyPhong">
+    <ElementType Name="Select_AllDangKyPhongResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HoTen" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ChucVu" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idPhong" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NgayDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idNguoiDat" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Select_NgayDat" Method="Select_NgayDat">
+    <ElementType Name="Select_NgayDatResult">
+      <Column Name="NgayDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Search_Phong" Method="Search_Phong">
+    <Parameter Name="Ten" Parameter="ten" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="url" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="SoLuong" Parameter="soLuong" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="TrangThai" Parameter="trangThai" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="Search_PhongResult">
+      <Column Name="idPhong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Insert_ThongBao" Method="Insert_ThongBao">
+    <Parameter Name="ChiTiet" Parameter="chiTiet" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Delete_ThongBao" Method="Delete_ThongBao">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Update_ThongBao" Method="Update_ThongBao">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ChiTiet" Parameter="chiTiet" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Search_ThongBao" Method="Search_ThongBao">
+    <Parameter Name="id" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="Search_ThongBaoResult">
+      <Column Name="idThongBao" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ChiTiet" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Count_ThongBao" Method="Count_ThongBao">
+    <ElementType Name="Count_ThongBaoResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Select_ID" Method="Select_ID">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="Select_IDResult">
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NgayDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Search_ChiTiet" Method="Search_ChiTiet">
+    <Parameter Name="id" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="Search_ChiTietResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NgayDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idNguoiDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idNguoiDat1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="HoTen" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idPhong1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="url" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SoLuong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.select_IdNguoiDat" Method="select_IdNguoiDat">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="select_IdNguoiDatResult">
+      <Column Name="idNguoiDat" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.select_NguoiDat" Method="select_NguoiDat">
+    <ElementType Name="select_NguoiDatResult">
+      <Column Name="idNguoiDat" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="HoTen" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Insert_NguoiDat" Method="Insert_NguoiDat">
+    <Parameter Name="idNguoiDat" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="HoTen" Parameter="hoTen" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="SDT" Parameter="sDT" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="DiaChi" Parameter="diaChi" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Delete_NguoiDat" Method="Delete_NguoiDat">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Search_NguoiDat" Method="Search_NguoiDat">
+    <Parameter Name="id" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="Search_NguoiDatResult">
+      <Column Name="idNguoiDat" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="HoTen" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Update_NguoiDat" Method="Update_NguoiDat">
+    <Parameter Name="idNguoiDat" Type="System.Int32" DbType="Int" />
+    <Parameter Name="HoTen" Parameter="hoTen" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="SDT" Parameter="sDT" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="DiaChi" Parameter="diaChi" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Select_AllChitiet" Method="Select_AllChitiet">
+    <ElementType Name="Select_AllChitietResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NgayDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idNguoiDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Insert_ChiTiet" Method="Insert_ChiTiet">
+    <Parameter Name="idPhong" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="NgayDat" Parameter="ngayDat" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="idNguoiDat" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Delete_Chitiet" Method="Delete_Chitiet">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Search_ALLChiTiet" Method="Search_ALLChiTiet">
+    <Parameter Name="id" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="Search_ALLChiTietResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idPhong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NgayDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="idNguoiDat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sort_ThongBaoDesc" Method="Sort_ThongBaoDesc">
+    <ElementType Name="Sort_ThongBaoDescResult">
+      <Column Name="idThongBao" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ChiTiet" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sort_ThongBaoAsc" Method="Sort_ThongBaoAsc">
+    <ElementType Name="Sort_ThongBaoAscResult">
+      <Column Name="idThongBao" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ChiTiet" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>
